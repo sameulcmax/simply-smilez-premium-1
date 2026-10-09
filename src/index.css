@@ -1,0 +1,990 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap");
+@import "tailwindcss";
+
+:root {
+  font-family: "DM Sans", Arial, sans-serif;
+  color: var(--navy);
+  background: #ffffff;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  --navy: #0a3b5a;
+  --navy-deep: #082f4a;
+  --cyan: #29b7ca;
+  --cyan-dark: #168ba1;
+  --cyan-pale: #eaf8fa;
+  --gray: #77838a;
+  --line: #dce5e9;
+  --paper: #f7fafb;
+  --white: #fff;
+  --content-width: 1328px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --transition: 260ms var(--ease);
+}
+
+* { box-sizing: border-box; }
+:where([class*="-grid"]) > * { min-width: 0; }
+html { overflow-x: clip; scroll-behavior: smooth; scroll-padding-top: 120px; }
+body { margin: 0; min-width: 0; background: #fff; color: var(--navy); font-size: 16px; line-height: 1.65; }
+body.menu-open { overflow: hidden; }
+button, input, select, textarea { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+button { color: inherit; }
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+h1, h2, h3, p { margin-top: 0; }
+h1, h2, h3 { color: var(--navy); font-family: "Manrope", Arial, sans-serif; }
+p:last-child { margin-bottom: 0; }
+::selection { color: var(--navy-deep); background: #bdebf0; }
+:focus-visible { outline: 3px solid var(--cyan); outline-offset: 4px; }
+
+.container { width: min(var(--content-width), calc(100% - 96px)); margin-inline: auto; }
+.skip-link { position: fixed; z-index: 300; left: 14px; top: 10px; padding: 10px 16px; transform: translateY(-160%); color: #fff; background: var(--navy); }
+.skip-link:focus { transform: translateY(0); }
+.page-main { overflow: clip; }
+.section-space { padding-block: clamp(76px, 9vw, 136px); }
+.eyebrow { margin-bottom: 19px; color: var(--cyan-dark); font-family: "Manrope", sans-serif; font-size: 10px; font-weight: 800; letter-spacing: .16em; line-height: 1.4; text-transform: uppercase; }
+.section-heading h2 { max-width: 790px; margin-bottom: 19px; font-size: clamp(34px, 4.2vw, 57px); font-weight: 600; letter-spacing: -.052em; line-height: 1.09; }
+.section-intro { max-width: 640px; color: var(--gray); font-size: 16px; line-height: 1.75; }
+.button-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.button { min-height: 54px; display: inline-flex; align-items: center; justify-content: center; gap: 17px; padding: 0 22px; border: 1px solid transparent; font-size: 12px; font-weight: 700; letter-spacing: .012em; transition: background var(--transition), color var(--transition), border-color var(--transition), transform var(--transition), box-shadow var(--transition); }
+.button svg, .text-link svg, .footer-book-link svg, .footer-directions svg { transition: transform var(--transition); flex: 0 0 auto; }
+.button:hover svg, .text-link:hover svg, .footer-book-link:hover svg, .footer-directions:hover svg { transform: translateX(4px); }
+.button-primary { color: #fff; background: var(--cyan); border-color: var(--cyan); }
+.button-primary:hover { color: #fff; background: var(--cyan-dark); border-color: var(--cyan-dark); box-shadow: 0 9px 22px rgba(19, 133, 151, .16); }
+.button-secondary { color: var(--navy); background: #fff; border-color: #cbd9df; }
+.button-secondary:hover { border-color: var(--cyan); color: var(--cyan-dark); background: var(--cyan-pale); }
+.button-light { color: var(--navy); background: #fff; border-color: #fff; }
+.button-light:hover { background: #eaf8fa; border-color: #eaf8fa; }
+.button-outline-light { color: #fff; background: transparent; border-color: rgba(255, 255, 255, .68); }
+.button-outline-light:hover { color: var(--navy); border-color: #fff; background: #fff; }
+.text-link { display: inline-flex; align-items: center; gap: 12px; color: var(--navy); font-size: 13px; font-weight: 700; line-height: 1.4; transition: color var(--transition); }
+.text-link svg { color: var(--cyan-dark); }
+.text-link:hover { color: var(--cyan-dark); }
+.image-index { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-top: 13px; border-top: 1px solid var(--line); color: var(--gray); font-size: 10px; letter-spacing: .07em; text-transform: uppercase; }
+.image-index span { color: var(--cyan-dark); font-size: 11px; }
+.reveal { opacity: 1; transform: none; }
+.motion-ready .reveal:not(.is-visible) { opacity: 0; transform: translateY(22px); }
+.motion-ready .reveal-image:not(.is-visible) { transform: translateY(18px) scale(.986); }
+.reveal { transition: opacity 700ms var(--ease), transform 700ms var(--ease); }
+.reveal-image { transition-duration: 900ms; }
+.reveal.is-visible { opacity: 1; transform: none; }
+
+/* Header */
+.site-header { position: sticky; top: 0; z-index: 80; background: rgba(255, 255, 255, .98); transition: box-shadow var(--transition), background var(--transition); }
+.site-header.is-scrolled { background: rgba(255, 255, 255, .96); box-shadow: 0 7px 26px rgba(9, 48, 72, .07); backdrop-filter: blur(15px); }
+.utility-bar { color: #fff; background: var(--navy-deep); font-size: 12px; letter-spacing: .025em; }
+.utility-inner { min-height: 36px; display: flex; align-items: center; justify-content: space-between; gap: 22px; }
+.utility-location, .utility-contacts, .utility-contacts a { display: flex; align-items: center; gap: 8px; }
+.utility-location svg, .utility-contacts svg { color: var(--cyan); }
+.utility-contacts { gap: 13px; }
+.utility-contacts a { transition: color var(--transition); }
+.utility-contacts a:hover { color: #b3ecf1; }
+.utility-divider { width: 1px; height: 12px; background: rgba(255,255,255,.32); }
+.utility-open { margin-left: 7px; color: rgba(255,255,255,.78); }
+.utility-open span { padding-inline: 4px; color: var(--cyan); }
+.nav-bar { border-bottom: 1px solid rgba(10, 59, 90, .09); transition: padding var(--transition), background var(--transition); }
+.nav-inner { min-height: 75px; display: flex; align-items: center; justify-content: space-between; gap: 23px; }
+.brand-link { flex: 0 0 auto; display: inline-flex; align-items: center; min-width: 145px; }
+.brand-logo { width: 198px; height: auto; object-fit: contain; }
+.fallback-logo { display: flex; align-items: center; gap: 9px; color: var(--cyan-dark); }
+.fallback-logo svg { width: 31px; height: 38px; }
+.fallback-logo b { display: block; font: 800 14px/1.1 "Manrope", sans-serif; letter-spacing: -.04em; }
+.fallback-logo small { display: block; margin-top: 3px; color: var(--gray); font: 10px/1.1 "DM Sans", sans-serif; letter-spacing: .03em; }
+.desktop-nav { flex: 1; display: flex; justify-content: center; align-items: center; gap: clamp(8px, 1.1vw, 18px); white-space: nowrap; }
+.desktop-nav a { position: relative; color: #345468; font-size: 12px; font-weight: 600; transition: color var(--transition); }
+.desktop-nav a::after { position: absolute; right: 0; bottom: -9px; left: 0; height: 1px; content: ""; background: var(--cyan); transform: scaleX(0); transform-origin: left; transition: transform var(--transition); }
+.desktop-nav a:hover, .desktop-nav a.active { color: var(--cyan-dark); }
+.desktop-nav a:hover::after, .desktop-nav a.active::after { transform: scaleX(1); }
+.header-appointment { display: inline-flex; flex: 0 0 auto; align-items: center; gap: 10px; min-height: 43px; padding: 0 14px; color: #fff; background: var(--cyan); font-size: 12px; font-weight: 700; white-space: nowrap; transition: background var(--transition); }
+.header-appointment svg { transition: transform var(--transition); }
+.header-appointment:hover { background: var(--cyan-dark); }
+.header-appointment:hover svg { transform: translateX(3px); }
+.menu-trigger, .mobile-navigation { display: none; }
+
+/* Home hero */
+.home-hero { position: relative; padding: clamp(38px, 5.1vw, 74px) 0 30px; background: #fff; }
+.home-hero-grid { min-height: min(700px, calc(100svh - 112px)); display: grid; grid-template-columns: minmax(0, .91fr) minmax(0, 1.09fr); gap: clamp(36px, 5.2vw, 83px); align-items: center; }
+.hero-copy { position: relative; max-width: 635px; padding: 24px 0 37px 22px; }
+.hero-location { margin-bottom: 31px; }
+.hero-location span { padding-inline: 4px; color: var(--gray); }
+.hero-brand-name { margin-bottom: 17px; color: var(--navy); font: 800 23px/1.2 "Manrope", sans-serif; letter-spacing: -.065em; }
+.hero-brand-name span { margin-left: 5px; color: var(--gray); font: 500 12px/1 "DM Sans", sans-serif; letter-spacing: .06em; }
+.hero-copy h1 { max-width: 620px; margin: 0 0 23px; font-size: clamp(47px, 5vw, 72px); font-weight: 600; letter-spacing: -.071em; line-height: 1.015; }
+.hero-description { max-width: 500px; margin-bottom: 28px; color: var(--gray); font-size: 15px; line-height: 1.8; }
+.hero-support { display: flex; align-items: center; gap: 11px; margin: 25px 0 0; color: var(--gray); font-size: 11px; letter-spacing: .015em; }
+.support-rule { width: 25px; height: 1px; background: var(--cyan); }
+.hero-tooth-detail { position: absolute; top: 2px; right: 17px; width: 46px; color: var(--cyan); opacity: .45; transform: rotate(10deg); }
+.hero-photo-wrap { position: relative; min-width: 0; height: min(64vw, 655px); max-height: 655px; }
+.hero-photo { width: 100%; height: 100%; object-fit: cover; object-position: 48% 45%; border-radius: 2px 104px 2px 2px; }
+.hero-photo-caption { display: flex; justify-content: space-between; gap: 14px; margin-top: 11px; color: var(--gray); font-size: 9px; letter-spacing: .09em; text-transform: uppercase; }
+.hero-photo-caption span:last-child { color: var(--cyan-dark); }
+.hero-baseline { display: none; }
+
+/* Quick access */
+.quick-access { border-block: 1px solid var(--line); background: #fff; }
+.quick-access-grid { display: grid; grid-template-columns: repeat(4, 1fr); }
+.quick-item { min-height: 86px; display: flex; align-items: center; gap: 15px; padding: 0 25px; border-right: 1px solid var(--line); transition: background var(--transition); }
+.quick-item:first-child { border-left: 1px solid var(--line); }
+.quick-item > svg:first-child { flex: 0 0 auto; color: var(--cyan); }
+.quick-item > span { flex: 1; color: var(--navy); font-size: 12px; font-weight: 600; }
+.quick-arrow { color: var(--cyan-dark); opacity: 0; transform: translateX(-5px); transition: opacity var(--transition), transform var(--transition); }
+.quick-item:hover { background: #f8fbfc; }
+.quick-item:hover .quick-arrow { opacity: 1; transform: translateX(0); }
+
+/* Welcome */
+.welcome-grid { display: grid; grid-template-columns: minmax(0, 1.03fr) minmax(0, .8fr); gap: clamp(60px, 9vw, 145px); align-items: center; }
+.welcome-photo { min-width: 0; }
+.welcome-photo img { width: 100%; height: clamp(400px, 47vw, 590px); object-fit: cover; object-position: 53% center; border-radius: 2px 96px 2px 2px; }
+.welcome-photo .image-index { margin-top: 14px; }
+.welcome-copy { max-width: 512px; padding-block: 18px; }
+.welcome-copy h2, .cosmetic-copy h2, .kids-copy h2, .location-copy h2 { margin-bottom: 23px; font-size: clamp(36px, 4.15vw, 58px); font-weight: 600; letter-spacing: -.06em; line-height: 1.08; }
+.welcome-copy > p:not(.eyebrow), .cosmetic-copy > p:not(.eyebrow), .kids-copy > p:not(.eyebrow) { margin-bottom: 17px; color: var(--gray); font-size: 15px; line-height: 1.85; }
+.welcome-copy .text-link { margin-top: 15px; }
+
+/* Treatment editorial grid */
+.treatments-section { background: var(--paper); }
+.treatments-heading-row { display: flex; justify-content: space-between; align-items: end; gap: 35px; margin-bottom: 48px; }
+.treatments-heading-row .section-heading { max-width: 800px; }
+.treatments-heading-row .section-heading h2 { max-width: 740px; }
+.heading-link { flex: 0 0 auto; margin-bottom: 12px; }
+.treatment-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px 24px; }
+.treatment-card { min-width: 0; }
+.treatment-card-link { display: block; height: 100%; }
+.treatment-image-wrap { position: relative; display: block; overflow: hidden; aspect-ratio: 1.45 / 1; background: #e9f2f4; }
+.treatment-image-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 700ms var(--ease); }
+.treatment-card-link:hover .treatment-image-wrap img { transform: scale(1.035); }
+.treatment-index { position: absolute; right: 13px; bottom: 13px; display: grid; width: 34px; height: 34px; place-items: center; color: var(--navy); background: #fff; font-size: 10px; font-weight: 700; }
+.treatment-card-content { display: block; padding: 17px 2px 0; }
+.treatment-card-title { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; color: var(--navy); font-family: "Manrope", sans-serif; font-size: 17px; font-weight: 650; letter-spacing: -.035em; line-height: 1.35; }
+.treatment-card-title svg { flex: 0 0 auto; margin-top: 3px; color: var(--cyan-dark); transition: transform var(--transition); }
+.treatment-card-link:hover .treatment-card-title svg { transform: translateX(4px); }
+.treatment-card-description { display: block; max-width: 340px; margin-top: 8px; color: var(--gray); font-size: 12px; line-height: 1.7; }
+.treatment-grid-featured .treatment-card.is-featured { grid-column: span 2; }
+.treatment-grid-featured .treatment-card.is-featured .treatment-card-link { display: grid; grid-template-columns: 1.13fr .87fr; align-items: center; gap: 28px; }
+.treatment-grid-featured .treatment-card.is-featured .treatment-image-wrap { height: 100%; min-height: 280px; aspect-ratio: auto; }
+.treatment-grid-featured .treatment-card.is-featured .treatment-card-content { padding: 20px 20px 20px 0; }
+.treatment-grid-featured .treatment-card.is-featured .treatment-card-title { font-size: clamp(23px, 2.5vw, 33px); }
+.treatment-grid-featured .treatment-card.is-featured .treatment-card-description { font-size: 13px; }
+.treatment-grid-featured .treatment-card.is-featured .treatment-index { right: 16px; bottom: 16px; }
+.treatment-disclaimer { max-width: 660px; margin: 34px 0 0 auto; color: var(--gray); font-size: 10px; line-height: 1.7; text-align: right; }
+
+/* Home features */
+.cosmetic-grid { display: grid; grid-template-columns: minmax(0, 1.03fr) minmax(0, .8fr); gap: clamp(60px, 9vw, 140px); align-items: center; }
+.cosmetic-photo { position: relative; min-width: 0; }
+.cosmetic-photo img { width: 100%; height: clamp(400px, 48vw, 620px); object-fit: cover; object-position: center; border-radius: 2px 2px 104px 2px; }
+.photo-side-note { display: block; margin-top: 13px; color: var(--gray); font-size: 10px; letter-spacing: .12em; text-align: right; text-transform: uppercase; }
+.cosmetic-copy { max-width: 510px; }
+.cosmetic-copy .eyebrow { margin-bottom: 19px; }
+.minimal-list { padding: 0; margin: 28px 0 32px; list-style: none; border-top: 1px solid var(--line); }
+.minimal-list li { display: flex; align-items: center; gap: 17px; padding: 13px 0; border-bottom: 1px solid var(--line); color: var(--navy); font-size: 12px; font-weight: 600; }
+.minimal-list li span { color: var(--cyan-dark); font-size: 10px; }
+.kids-feature { background: var(--paper); }
+.kids-grid { display: grid; grid-template-columns: minmax(0, .84fr) minmax(0, 1.03fr); gap: clamp(60px, 9vw, 140px); align-items: center; }
+.kids-copy { max-width: 500px; }
+.kids-copy h2 { max-width: 480px; }
+.kids-photo img { width: 100%; height: clamp(400px, 48vw, 610px); object-fit: cover; object-position: center 40%; border-radius: 2px 2px 2px 104px; }
+.kids-photo .image-index { margin-top: 13px; }
+.kids-links { display: flex; flex-wrap: wrap; gap: 15px 28px; margin-top: 30px; }
+
+/* Why choose */
+.values-heading { margin-bottom: 53px; }
+.values-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line); }
+.value-item { min-height: 235px; padding: 23px 23px 0; border-right: 1px solid var(--line); }
+.value-item:first-child { border-left: 1px solid var(--line); }
+.value-topline { display: flex; justify-content: space-between; align-items: center; margin-bottom: 34px; color: var(--cyan-dark); }
+.value-topline span { color: #8c9aa1; font-size: 10px; }
+.value-item h3 { max-width: 230px; margin-bottom: 12px; font-size: 19px; font-weight: 600; letter-spacing: -.035em; line-height: 1.28; }
+.value-item p { max-width: 240px; color: var(--gray); font-size: 12px; line-height: 1.75; }
+
+/* Location and CTA */
+.location-section { background: #f7fafb; }
+.location-grid { display: grid; grid-template-columns: .78fr 1.22fr; gap: clamp(54px, 8vw, 116px); align-items: center; }
+.location-copy { max-width: 420px; }
+.location-copy h2 { font-size: clamp(34px, 3.6vw, 49px); }
+.location-address { color: var(--gray); font-size: 14px; line-height: 1.8; }
+.location-meta { display: grid; gap: 18px; padding-block: 24px; margin-block: 13px 20px; border-block: 1px solid var(--line); }
+.location-meta > div { display: flex; align-items: flex-start; gap: 14px; }
+.location-meta > div > svg { margin-top: 3px; color: var(--cyan-dark); }
+.location-meta span, .location-meta a { display: block; color: var(--navy); font-size: 12px; line-height: 1.9; }
+.location-meta a:hover { color: var(--cyan-dark); }
+.map-frame { position: relative; min-width: 0; height: clamp(350px, 40vw, 535px); overflow: hidden; background: #e6eef1; }
+.map-frame iframe { width: 100%; height: 100%; border: 0; }
+.map-directions { position: absolute; right: 17px; bottom: 17px; display: flex; align-items: center; gap: 9px; padding: 12px 16px; color: var(--navy); background: #fff; box-shadow: 0 4px 20px rgba(8,47,74,.1); font-size: 11px; font-weight: 700; }
+.map-directions svg:first-child { color: var(--cyan-dark); }
+.map-directions svg:last-child { transition: transform var(--transition); }
+.map-directions:hover svg:last-child { transform: translateX(3px); }
+.location-section-compact { padding-block: 74px; }
+.location-section-compact .location-grid { grid-template-columns: .8fr 1.2fr; }
+.location-section-compact .map-frame { height: 390px; }
+.final-cta { position: relative; overflow: hidden; color: #fff; background: var(--cyan); }
+.final-cta-inner { position: relative; min-height: 300px; display: flex; justify-content: space-between; align-items: center; gap: 50px; padding-block: 64px; }
+.final-cta-copy { position: relative; z-index: 1; max-width: 700px; }
+.final-cta .eyebrow { color: rgba(8,47,74,.78); }
+.final-cta h2 { margin-bottom: 13px; color: #fff; font-size: clamp(38px, 5vw, 64px); font-weight: 600; letter-spacing: -.065em; line-height: 1.05; }
+.final-cta-copy > p:last-child { color: rgba(255,255,255,.9); font-size: 14px; }
+.final-cta-actions { position: relative; z-index: 1; display: flex; flex-wrap: wrap; gap: 12px; }
+.cta-tooth-mark { position: absolute; right: 31%; top: 8px; width: 112px; color: rgba(255,255,255,.17); transform: rotate(15deg); }
+
+/* Footer */
+.site-footer { padding: 73px 0 20px; color: var(--gray); background: #f7fafb; font-size: 14px; }
+.footer-main { display: grid; grid-template-columns: 1.25fr .85fr 1.1fr 1.25fr; gap: 55px; padding-bottom: 61px; }
+.site-footer .brand-link { min-height: 56px; }
+.site-footer .brand-logo { width: 193px; }
+.site-footer .fallback-logo { color: var(--cyan-dark); }
+.site-footer .fallback-logo small { color: var(--gray); }
+.footer-brand-column > p { max-width: 300px; margin: 22px 0 18px; color: var(--gray); font-size: 14px; line-height: 1.8; }
+.footer-book-link, .footer-directions { display: inline-flex; align-items: center; gap: 9px; color: var(--navy); font-size: 13px; font-weight: 700; }
+.footer-book-link svg, .footer-directions svg { color: var(--cyan); }
+.footer-title { margin: 8px 0 20px; color: var(--navy); font-family: "Manrope", sans-serif; font-size: 15px; font-weight: 700; }
+.footer-links { display: grid; justify-items: start; gap: 9px; }
+.footer-links a { display: inline-flex; align-items: center; gap: 7px; color: var(--gray); font-size: 13px; line-height: 1.55; transition: color var(--transition); }
+.footer-links a:hover, .footer-directions:hover, .footer-book-link:hover { color: var(--cyan-dark); }
+.footer-contact-column .footer-address, .footer-hours { color: var(--gray); font-size: 13px; line-height: 1.8; }
+.footer-phones { display: flex; flex-direction: row; gap: 15px; margin: 14px 0; }
+.footer-phones a { color: var(--navy); font-size: 14px; }
+.footer-hours { margin-bottom: 13px; }
+.footer-bottom { display: flex; justify-content: space-between; gap: 20px; padding-top: 17px; border-top: 1px solid var(--line); color: var(--gray); font-size: 12px; }
+.back-to-top { position: fixed; z-index: 40; right: 25px; bottom: 25px; display: grid; width: 42px; height: 42px; place-items: center; border: 1px solid rgba(255,255,255,.4); color: #fff; background: var(--navy); font-size: 21px; line-height: 1; opacity: 0; pointer-events: none; transform: translateY(9px); transition: opacity var(--transition), transform var(--transition), background var(--transition); }
+.back-to-top.is-visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+.back-to-top:hover { background: var(--cyan-dark); }
+
+/* Shared internal-page heroes */
+.breadcrumbs { padding-top: 17px; }
+.breadcrumbs ol { display: flex; flex-wrap: wrap; gap: 10px; padding: 0; margin: 0; color: var(--gray); font-size: 13px; list-style: none; }
+.breadcrumbs li + li::before { padding-right: 10px; color: #aab6bb; content: "/"; }
+.breadcrumbs a:hover { color: var(--cyan-dark); }
+.breadcrumbs [aria-current="page"] { color: var(--navy); }
+.editorial-page-hero { padding-block: 52px 35px; }
+.editorial-hero-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(50px, 8vw, 120px); align-items: center; }
+.editorial-hero-copy { padding-left: 24px; }
+.editorial-hero-copy h1, .directory-intro h1, .treatment-hero-copy h1, .invisalign-hero-copy h1, .kids-page-copy h1, .gallery-intro h1, .patient-intro h1, .faq-page-intro h1, .contact-intro h1, .privacy-intro h1, .not-found-inner h1, .doctors-intro h1 { margin-bottom: 22px; font-size: clamp(43px, 5vw, 67px); font-weight: 600; letter-spacing: -.065em; line-height: 1.04; }
+.editorial-hero-copy > p:not(.eyebrow), .directory-intro-aside > p, .treatment-hero-copy > p:not(.eyebrow), .invisalign-hero-copy > p:not(.eyebrow), .kids-page-copy > p:not(.eyebrow) { max-width: 490px; margin-bottom: 28px; color: var(--gray); font-size: 15px; line-height: 1.8; }
+.doctors-intro { padding: 65px 0 40px; }
+.doctors-intro-inner { display: grid; grid-template-columns: 1.08fr .72fr; gap: clamp(50px, 8vw, 120px); align-items: end; }
+.doctors-intro h1 { max-width: 760px; margin-bottom: 0; }
+.doctors-intro-inner > p { max-width: 470px; margin: 0 0 5px; color: var(--gray); font-size: 16px; line-height: 1.8; }
+.doctors-section { background: var(--paper); }
+.doctors-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; align-items: start; }
+.doctor-card { min-width: 0; height: 100%; overflow: hidden; background: #fff; }
+.doctor-image-wrap { position: relative; overflow: hidden; aspect-ratio: 16 / 9; background: #e8f0f2; }
+.doctor-image { width: 100%; height: 100%; object-fit: cover; object-position: center 38%; }
+.doctor-card-content { padding: clamp(23px, 3vw, 38px); }
+.doctor-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 21px; }
+.doctor-badges span { padding: 7px 10px; color: var(--cyan-dark); border: 1px solid rgba(41,183,202,.3); background: #f4fbfc; font-size: 11px; font-weight: 700; }
+.doctor-badges span + span { color: var(--navy); border-color: var(--line); background: #fff; }
+.doctor-specialty { margin-bottom: 8px; color: var(--cyan-dark); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.doctor-card-content h2 { margin-bottom: 4px; font-size: clamp(27px, 3vw, 38px); font-weight: 650; letter-spacing: -.055em; line-height: 1.15; }
+.doctor-designation { margin-bottom: 12px; color: var(--gray); font-size: 16px; line-height: 1.5; }
+.doctor-credentials { padding-bottom: 17px; margin-bottom: 17px; border-bottom: 1px solid var(--line); color: var(--navy); font-size: 14px; font-weight: 700; line-height: 1.65; }
+.doctor-summary { min-height: 112px; margin-bottom: 22px; color: var(--gray); font-size: 15px; line-height: 1.8; }
+.doctor-metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); padding: 0; margin: 0; border-top: 1px solid var(--line); }
+.doctor-metrics > div { min-width: 0; padding: 16px 10px 0 0; }
+.doctor-metrics dt { color: var(--navy); font-family: "Manrope", sans-serif; font-size: 17px; font-weight: 800; letter-spacing: -.04em; line-height: 1.2; overflow-wrap: anywhere; }
+.doctor-metrics dd { margin: 5px 0 0; color: var(--gray); font-size: 11px; line-height: 1.45; }
+.editorial-hero-image img { width: 100%; height: clamp(410px, 51vw, 640px); object-fit: cover; border-radius: 2px 102px 2px 2px; }
+.editorial-hero-image .image-index { margin-top: 13px; }
+.about-philosophy { background: var(--paper); }
+.about-philosophy-grid { display: grid; grid-template-columns: .95fr 1.05fr; gap: clamp(50px, 10vw, 154px); }
+.about-philosophy-heading h2, .about-care-copy h2 { max-width: 510px; margin: 0; font-size: clamp(34px, 4.3vw, 55px); font-weight: 600; letter-spacing: -.06em; line-height: 1.1; }
+.about-philosophy-copy { max-width: 580px; padding-top: 8px; }
+.about-philosophy-copy p, .about-care-copy > p:not(.eyebrow) { color: var(--gray); font-size: 15px; line-height: 1.85; }
+.about-philosophy-copy p + p { margin-top: 19px; }
+.about-philosophy-copy .text-link { margin-top: 14px; }
+.about-image-band { position: relative; height: clamp(330px, 42vw, 550px); overflow: hidden; background: var(--paper); }
+.about-image-band img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 44%; }
+.about-image-caption { position: absolute; right: max(48px, calc((100vw - var(--content-width))/2)); bottom: 23px; left: max(48px, calc((100vw - var(--content-width))/2)); display: flex; justify-content: space-between; gap: 15px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,.7); color: #fff; font-size: 9px; font-weight: 700; letter-spacing: .15em; text-shadow: 0 1px 8px rgba(0,0,0,.2); }
+.about-commitments .section-heading { max-width: 760px; margin-bottom: 50px; }
+.about-commitments-grid { border-top: 1px solid var(--line); }
+.commitment-row { display: grid; grid-template-columns: 70px .7fr 1.1fr; gap: 25px; align-items: center; min-height: 103px; border-bottom: 1px solid var(--line); }
+.commitment-row > span { color: var(--cyan-dark); font-size: 10px; }
+.commitment-row h3 { margin: 0; font-size: 20px; font-weight: 600; letter-spacing: -.035em; }
+.commitment-row p { max-width: 520px; margin: 0; color: var(--gray); font-size: 12px; line-height: 1.7; }
+.about-care-grid { display: grid; grid-template-columns: 1fr .88fr; align-items: center; gap: clamp(54px, 9vw, 140px); }
+.about-care-image img { width: 100%; height: clamp(380px, 45vw, 555px); object-fit: cover; border-radius: 2px 2px 2px 100px; }
+.about-care-copy { max-width: 520px; }
+.about-care-copy h2 { margin-bottom: 22px; }
+.inline-link-list { display: grid; gap: 13px; margin-top: 25px; padding-top: 20px; border-top: 1px solid var(--line); }
+
+/* Directory */
+.directory-intro { padding: 72px 0 47px; }
+.directory-intro-grid { display: grid; grid-template-columns: 1.1fr .7fr; gap: 80px; align-items: end; }
+.directory-intro h1 { max-width: 760px; margin-bottom: 0; }
+.directory-intro-aside { max-width: 430px; padding-bottom: 4px; }
+.directory-intro-aside .text-link { margin-top: 3px; }
+.directory-treatments { padding-top: 18px; }
+.directory-overline { display: flex; justify-content: space-between; padding-bottom: 13px; margin-bottom: 32px; border-bottom: 1px solid var(--line); color: var(--gray); font-size: 9px; font-weight: 700; letter-spacing: .13em; }
+.directory-treatments .treatment-grid { row-gap: 46px; }
+
+/* Treatment detail pages */
+.treatment-hero-page { padding: 48px 0 43px; }
+.treatment-hero-grid { display: grid; grid-template-columns: .88fr 1.12fr; align-items: center; gap: clamp(48px, 8.4vw, 128px); }
+.treatment-hero-copy { padding-left: 20px; }
+.treatment-hero-copy h1 { margin-bottom: 20px; }
+.treatment-lead { max-width: 500px; color: var(--gray); font-size: 15px; line-height: 1.8; }
+.treatment-hero-copy .button { margin-top: 7px; }
+.treatment-hero-note { display: flex; align-items: center; gap: 10px; margin-top: 20px; color: var(--gray); font-size: 10px; }
+.treatment-hero-note svg { color: var(--cyan-dark); }
+.treatment-hero-image { position: relative; }
+.treatment-hero-image img { width: 100%; height: clamp(390px, 48vw, 615px); object-fit: cover; border-radius: 2px 100px 2px 2px; }
+.photo-credit-note { display: block; padding-top: 9px; color: var(--gray); font-size: 9px; text-align: right; }
+.treatment-overview { background: var(--paper); }
+.treatment-overview-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(55px, 10vw, 150px); }
+.overview-title h2, .detail-column h2, .suitability-grid h2, .treatment-faq-heading h2, .invisalign-overview-title h2, .kids-overview-grid h2, .kids-practice-copy h2, .kids-guidance-title h2, .patient-visit-heading h2, .contact-details h2 { margin-bottom: 0; font-size: clamp(34px, 4vw, 50px); font-weight: 600; letter-spacing: -.06em; line-height: 1.1; }
+.overview-copy { max-width: 650px; }
+.overview-copy p, .detail-column > p:not(.eyebrow), .suitability-grid > div:nth-child(2) > p:not(.eyebrow), .treatment-faq-heading > p:not(.eyebrow) { color: var(--gray); font-size: 15px; line-height: 1.85; }
+.overview-copy p + p { margin-top: 18px; }
+.treatment-details-section { padding-block: clamp(70px, 8vw, 110px); }
+.treatment-detail-columns { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(55px, 9vw, 135px); }
+.detail-column h2 { margin-bottom: 27px; font-size: clamp(30px, 3.4vw, 43px); }
+.check-list, .benefit-list { display: grid; gap: 17px; padding: 0; margin: 0; list-style: none; }
+.check-list li, .benefit-list li { display: flex; align-items: flex-start; gap: 13px; color: var(--navy); font-size: 13px; line-height: 1.7; }
+.check-list li svg { flex: 0 0 auto; margin-top: 3px; color: var(--cyan-dark); }
+.benefit-list { gap: 13px; }
+.benefit-plus { flex: 0 0 auto; color: var(--cyan-dark); font-size: 19px; line-height: 1.2; }
+.consideration-copy { margin-top: 23px; padding-top: 19px; border-top: 1px solid var(--line); color: var(--gray); font-size: 12px; line-height: 1.8; }
+.treatment-process-section { background: var(--paper); }
+.treatment-process-section .section-heading { max-width: 800px; margin-bottom: 48px; }
+.process-list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); padding: 0; margin: 0; list-style: none; border-top: 1px solid var(--line); }
+.process-step { min-height: 185px; padding: 21px 23px 0 0; margin-right: 20px; border-right: 1px solid var(--line); }
+.process-step:last-child { margin-right: 0; border-right: 0; }
+.process-number { color: var(--cyan-dark); font-size: 10px; font-weight: 700; }
+.process-step p { max-width: 250px; margin-top: 30px; color: var(--navy); font-family: "Manrope", sans-serif; font-size: 15px; font-weight: 550; line-height: 1.55; }
+.suitability-section { padding-block: 48px; background: #f2f9fa; }
+.suitability-grid { display: grid; grid-template-columns: 50px 1fr auto; gap: 25px; align-items: center; }
+.suitability-mark { display: grid; width: 46px; height: 46px; place-items: center; color: var(--cyan-dark); border: 1px solid rgba(41,183,202,.38); }
+.suitability-grid h2 { margin-bottom: 10px; font-size: 25px; }
+.suitability-grid > div:nth-child(2) > p:last-child { max-width: 850px; margin-bottom: 0; color: var(--gray); font-size: 12px; line-height: 1.75; }
+.suitability-grid .text-link { white-space: nowrap; }
+.treatment-faq-grid { display: grid; grid-template-columns: .65fr 1.35fr; gap: clamp(50px, 9vw, 135px); }
+.treatment-faq-heading h2 { margin-bottom: 16px; }
+.treatment-faq-heading .text-link { margin-top: 8px; }
+.related-treatments { background: var(--paper); }
+.related-heading { display: flex; justify-content: space-between; align-items: end; gap: 30px; margin-bottom: 37px; }
+.related-heading .section-heading h2 { margin-bottom: 0; }
+.related-heading .text-link { margin-bottom: 7px; }
+.related-treatments .treatment-grid { grid-template-columns: repeat(3, 1fr); }
+
+/* Invisalign */
+.invisalign-hero { padding: 48px 0 45px; }
+.invisalign-hero-grid { display: grid; grid-template-columns: .92fr 1.08fr; gap: clamp(50px, 8vw, 120px); align-items: center; }
+.invisalign-hero-copy { padding-left: 20px; }
+.invisalign-hero-copy > p:not(.eyebrow) { max-width: 510px; }
+.invisalign-hero-image img { width: 100%; height: clamp(405px, 48vw, 600px); object-fit: cover; border-radius: 2px 2px 2px 100px; }
+.invisalign-hero-image .image-index { margin-top: 13px; }
+.hero-footnote { display: block; margin-top: 15px; color: var(--gray); font-size: 10px; }
+.invisalign-overview { background: var(--paper); }
+.invisalign-overview-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: clamp(55px, 9vw, 135px); }
+.invisalign-overview-copy { max-width: 650px; }
+.invisalign-overview-copy p { color: var(--gray); font-size: 14px; line-height: 1.85; }
+.invisalign-overview-copy p + p { margin-top: 17px; }
+.invisalign-overview-copy .text-link { margin-top: 9px; }
+.comparison-section .section-heading { max-width: 850px; margin-bottom: 42px; }
+.comparison-table-wrap { width: 100%; overflow-x: auto; border-top: 1px solid var(--line); }
+.comparison-table { width: 100%; border-collapse: collapse; min-width: 650px; }
+.comparison-table th, .comparison-table td { padding: 19px 22px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.comparison-table thead th { color: var(--cyan-dark); font-size: 10px; letter-spacing: .09em; text-transform: uppercase; }
+.comparison-table tbody th { width: 22%; color: var(--navy); font-family: "Manrope", sans-serif; font-size: 13px; font-weight: 700; }
+.comparison-table td { color: var(--gray); font-size: 12px; line-height: 1.7; }
+.invisalign-first-feature { background: var(--paper); }
+.invisalign-first-grid { display: grid; grid-template-columns: 1fr .88fr; gap: clamp(55px, 9vw, 135px); align-items: center; }
+.invisalign-first-image img { width: 100%; height: clamp(390px, 45vw, 555px); object-fit: cover; border-radius: 2px 90px 2px 2px; }
+.invisalign-first-copy h2, .journey-section h2 { margin-bottom: 20px; font-size: clamp(34px, 4vw, 51px); font-weight: 600; letter-spacing: -.06em; line-height: 1.1; }
+.invisalign-first-copy > p:not(.eyebrow) { color: var(--gray); font-size: 14px; line-height: 1.85; }
+.invisalign-first-copy .text-link { margin-top: 12px; }
+.journey-section .section-heading { max-width: 760px; margin-bottom: 45px; }
+.invisalign-faq { background: var(--paper); }
+.invisalign-faq-grid, .kids-faq-grid { display: grid; grid-template-columns: .65fr 1.35fr; gap: clamp(50px, 9vw, 135px); }
+.invisalign-faq-grid h2, .kids-faq-grid h2 { margin-bottom: 16px; font-size: clamp(34px, 4vw, 50px); font-weight: 600; letter-spacing: -.06em; line-height: 1.1; }
+.invisalign-faq-grid > div:first-child > p:not(.eyebrow) { color: var(--gray); font-size: 13px; }
+
+/* FAQ accordion */
+.faq-categories { display: grid; gap: 31px; }
+.faq-category > h2 { margin-bottom: 12px; font-size: 20px; font-weight: 650; letter-spacing: -.03em; }
+.faq-list { border-top: 1px solid var(--line); }
+.faq-item { border-bottom: 1px solid var(--line); }
+.faq-item h3 { margin: 0; }
+.faq-item h3 button { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 17px 0; border: 0; color: var(--navy); background: transparent; cursor: pointer; text-align: left; font-family: "Manrope", sans-serif; font-size: 13px; font-weight: 650; line-height: 1.5; }
+.faq-toggle { display: grid; flex: 0 0 auto; width: 29px; height: 29px; place-items: center; color: var(--cyan-dark); border: 1px solid var(--line); transition: background var(--transition), border var(--transition), color var(--transition); }
+.faq-item.is-open .faq-toggle { color: #fff; border-color: var(--cyan); background: var(--cyan); }
+.faq-answer p { max-width: 720px; padding: 0 52px 18px 0; margin: 0; color: var(--gray); font-size: 12px; line-height: 1.8; }
+.faq-answer[hidden] { display: none; }
+.faq-item button:hover { color: var(--cyan-dark); }
+
+/* Kids page */
+.kids-page-hero { padding: 49px 0 50px; }
+.kids-page-hero-grid { display: grid; grid-template-columns: .88fr 1.12fr; gap: clamp(55px, 8.5vw, 128px); align-items: center; }
+.kids-page-copy { padding-left: 20px; }
+.kids-page-image img { width: 100%; height: clamp(410px, 49vw, 610px); object-fit: cover; border-radius: 2px 96px 2px 2px; }
+.kids-page-image .image-index { margin-top: 13px; }
+.kids-overview { background: var(--paper); }
+.kids-overview-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(55px, 9vw, 135px); }
+.kids-overview-grid > div:nth-child(2) p { color: var(--gray); font-size: 14px; line-height: 1.85; }
+.kids-overview-grid > div:nth-child(2) p + p { margin-top: 17px; }
+.kids-practice-grid { display: grid; grid-template-columns: .95fr 1.05fr; gap: clamp(55px, 9vw, 135px); align-items: center; }
+.kids-practice-copy h2 { margin-bottom: 19px; }
+.kids-practice-copy > p:not(.eyebrow) { margin-bottom: 25px; color: var(--gray); font-size: 14px; line-height: 1.8; }
+.kids-practice-image img { width: 100%; height: clamp(390px, 45vw, 560px); object-fit: cover; border-radius: 2px 2px 2px 100px; }
+.kids-guidance-section { background: var(--paper); }
+.kids-guidance-grid { display: grid; grid-template-columns: .82fr 1.18fr; gap: clamp(55px, 9vw, 135px); }
+.parent-guidance-list { border-top: 1px solid var(--line); }
+.parent-guidance-row { display: grid; grid-template-columns: 36px 1fr; gap: 17px; padding: 22px 0; border-bottom: 1px solid var(--line); }
+.parent-guidance-row > span { padding-top: 3px; color: var(--cyan-dark); font-size: 10px; }
+.parent-guidance-row h3 { margin-bottom: 7px; font-size: 17px; font-weight: 650; letter-spacing: -.03em; }
+.parent-guidance-row p { max-width: 620px; margin: 0; color: var(--gray); font-size: 12px; line-height: 1.8; }
+.kids-aligner-feature { padding-block: 57px; color: var(--navy); background: #edf8fa; }
+.kids-aligner-inner { display: grid; grid-template-columns: 52px 1fr minmax(240px, .65fr); gap: 28px; align-items: center; }
+.kids-aligner-mark { display: grid; width: 46px; height: 46px; place-items: center; color: var(--cyan-dark); border: 1px solid rgba(41,183,202,.45); }
+.kids-aligner-inner h2 { max-width: 570px; margin-bottom: 12px; font-size: 27px; font-weight: 650; letter-spacing: -.04em; }
+.kids-aligner-inner > div:nth-child(2) > p:not(.eyebrow) { max-width: 650px; color: var(--gray); font-size: 12px; line-height: 1.75; }
+.kids-aligner-inner .text-link { margin-top: 4px; }
+.kids-aligner-inner > img { width: 100%; height: 190px; object-fit: cover; }
+.kids-faq-grid > div:first-child > .text-link { margin-top: 12px; }
+
+/* Gallery */
+.gallery-intro { padding: 63px 0 30px; }
+.gallery-intro-grid { display: grid; grid-template-columns: 1.15fr .75fr; gap: clamp(55px, 8vw, 125px); align-items: end; }
+.gallery-intro h1 { max-width: 790px; margin-bottom: 0; }
+.gallery-intro-grid > p { max-width: 460px; margin: 0 0 6px; color: var(--gray); font-size: 14px; line-height: 1.8; }
+.gallery-filter-row { display: flex; flex-wrap: wrap; gap: 5px; padding-block: 12px 24px; margin-bottom: 24px; border-bottom: 1px solid var(--line); }
+.gallery-filter { display: inline-flex; align-items: center; gap: 11px; min-height: 42px; padding: 0 15px; border: 1px solid transparent; color: var(--gray); background: transparent; cursor: pointer; font-size: 13px; font-weight: 600; transition: color var(--transition), background var(--transition), border-color var(--transition); }
+.gallery-filter span { display: grid; min-width: 19px; height: 19px; place-items: center; border-radius: 50%; color: inherit; background: rgba(10,59,90,.06); font-size: 9px; }
+.gallery-filter:hover, .gallery-filter.is-active { color: var(--navy); border-color: rgba(41,183,202,.35); background: #f0fafb; }
+.gallery-filter.is-active span { color: #fff; background: var(--cyan); }
+.gallery-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: 236px; gap: 19px; }
+.gallery-card { min-width: 0; min-height: 0; display: grid; grid-template-rows: 1fr auto; }
+.gallery-card.gallery-feature { grid-column: span 2; grid-row: span 2; }
+.gallery-image-button { position: relative; min-width: 0; min-height: 0; width: 100%; height: 100%; overflow: hidden; padding: 0; border: 0; background: #e9f0f2; cursor: zoom-in; }
+.gallery-image-button > img { width: 100%; height: 100%; object-fit: cover; transition: transform 700ms var(--ease); }
+.gallery-image-button:hover > img { transform: scale(1.04); }
+.gallery-open-icon { position: absolute; right: 11px; bottom: 11px; display: grid; width: 34px; height: 34px; place-items: center; color: var(--navy); background: #fff; opacity: 0; transform: translateY(5px); transition: opacity var(--transition), transform var(--transition); }
+.gallery-image-button:hover .gallery-open-icon, .gallery-image-button:focus-visible .gallery-open-icon { opacity: 1; transform: translateY(0); }
+.gallery-card-caption { padding: 8px 0 0; }
+.gallery-card-caption > span { display: block; color: var(--cyan-dark); font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+.gallery-card-caption h2 { margin: 2px 0 0; overflow: hidden; color: var(--navy); font-size: 14px; font-weight: 600; letter-spacing: -.015em; line-height: 1.4; text-overflow: ellipsis; white-space: nowrap; }
+.gallery-note { margin-top: 30px; color: var(--gray); font-size: 12px; line-height: 1.7; text-align: right; }
+.lightbox-backdrop { position: fixed; z-index: 150; inset: 0; display: grid; place-items: center; padding: 34px; background: rgba(4, 25, 40, .94); animation: fade-in 220ms ease-out; }
+.lightbox-dialog { width: min(1050px, 100%); max-height: 100%; display: grid; grid-template-rows: auto minmax(0,1fr) auto; outline: none; color: #fff; }
+.lightbox-top { display: flex; align-items: center; justify-content: space-between; padding-bottom: 14px; color: rgba(255,255,255,.72); font-size: 11px; letter-spacing: .08em; }
+.lightbox-top > span > span { padding-inline: 5px; color: var(--cyan); }
+.lightbox-close, .lightbox-arrow { display: grid; place-items: center; width: 46px; height: 46px; border: 1px solid rgba(255,255,255,.35); color: #fff; background: rgba(255,255,255,.06); cursor: pointer; transition: color var(--transition), background var(--transition), border-color var(--transition); }
+.lightbox-close:hover, .lightbox-arrow:hover { color: var(--navy); border-color: #fff; background: #fff; }
+.lightbox-content { min-height: 200px; display: grid; grid-template-columns: 52px minmax(0,1fr) 52px; gap: 17px; align-items: center; }
+.lightbox-photo { width: 100%; max-height: min(70vh, 720px); aspect-ratio: 1.5 / 1; object-fit: contain; background: rgba(255,255,255,.03); }
+.lightbox-caption { display: flex; align-items: baseline; gap: 16px; padding-top: 15px; }
+.lightbox-caption > span { color: #8ee1e8; font-size: 9px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+.lightbox-caption p { margin: 0; color: #fff; font: 600 15px/1.4 "Manrope", sans-serif; }
+.lightbox-caption small { margin-left: auto; color: rgba(255,255,255,.62); font-size: 9px; }
+
+/* Patient info */
+.patient-intro { padding: 70px 0 49px; }
+.patient-intro-grid, .faq-page-intro-inner, .contact-intro-grid { display: grid; grid-template-columns: 1.05fr .75fr; gap: clamp(60px, 9vw, 140px); align-items: end; }
+.patient-intro h1 { max-width: 760px; margin-bottom: 0; }
+.patient-intro-grid > p, .faq-page-intro-inner > p, .contact-intro-grid > p { max-width: 470px; margin-bottom: 5px; color: var(--gray); font-size: 14px; line-height: 1.8; }
+.patient-visit-section { background: var(--paper); }
+.patient-visit-grid { display: grid; grid-template-columns: .72fr 1.28fr; gap: clamp(50px, 8vw, 120px); }
+.patient-visit-heading { max-width: 415px; }
+.patient-visit-heading h2 { margin-bottom: 18px; }
+.patient-visit-heading > p:not(.eyebrow) { margin-bottom: 18px; color: var(--gray); font-size: 13px; line-height: 1.8; }
+.patient-guide-list { border-top: 1px solid var(--line); }
+.patient-guide-row { display: grid; grid-template-columns: 40px 1fr; gap: 16px; padding: 19px 0; border-bottom: 1px solid var(--line); }
+.patient-guide-row > span { padding-top: 4px; color: var(--cyan-dark); font-size: 10px; }
+.patient-guide-row h3 { margin-bottom: 7px; font-size: 16px; font-weight: 650; letter-spacing: -.025em; }
+.patient-guide-row p { max-width: 620px; margin: 0; color: var(--gray); font-size: 12px; line-height: 1.75; }
+.patient-children-band { padding-block: 60px; background: #edf8fa; }
+.patient-children-grid { display: grid; grid-template-columns: .75fr 1fr; gap: clamp(50px, 8vw, 115px); align-items: center; }
+.patient-children-grid > img { width: 100%; height: 300px; object-fit: cover; }
+.patient-children-grid h2 { margin-bottom: 14px; font-size: 33px; font-weight: 600; letter-spacing: -.05em; line-height: 1.1; }
+.patient-children-grid > div > p:not(.eyebrow) { color: var(--gray); font-size: 13px; line-height: 1.8; }
+.patient-children-grid .text-link { margin-top: 5px; }
+.patient-links-section .section-heading { margin-bottom: 42px; }
+.patient-link-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); }
+.patient-link-item { position: relative; min-height: 190px; padding: 20px 25px 15px 0; border-right: 1px solid var(--line); }
+.patient-link-item + .patient-link-item { padding-left: 25px; }
+.patient-link-item:last-child { border-right: 0; }
+.patient-link-item > span { color: var(--cyan-dark); font-size: 10px; }
+.patient-link-item h3 { margin: 17px 0 7px; font-size: 18px; font-weight: 650; letter-spacing: -.03em; }
+.patient-link-item p { max-width: 250px; color: var(--gray); font-size: 11px; line-height: 1.7; }
+.patient-link-item > svg { position: absolute; right: 19px; bottom: 21px; color: var(--cyan-dark); transition: transform var(--transition); }
+.patient-link-item:hover > svg { transform: translateX(4px); }
+
+/* FAQs page */
+.faq-page-intro { padding: 68px 0 46px; }
+.faq-page-intro-inner { grid-template-columns: 1fr .68fr; }
+.faq-page-intro h1 { margin-bottom: 0; }
+.faq-page-content { background: var(--paper); }
+.faq-page-layout { display: grid; grid-template-columns: .57fr 1.43fr; gap: clamp(45px, 8vw, 120px); align-items: start; }
+.faq-sidebar { position: sticky; top: 140px; }
+.faq-sidebar nav { display: grid; gap: 2px; }
+.faq-sidebar nav a { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); color: var(--gray); font-size: 11px; transition: color var(--transition); }
+.faq-sidebar nav a svg { color: var(--cyan-dark); opacity: 0; transition: opacity var(--transition), transform var(--transition); }
+.faq-sidebar nav a:hover { color: var(--navy); }
+.faq-sidebar nav a:hover svg { opacity: 1; transform: translateX(3px); }
+.faq-callout { padding: 17px 0 0; margin-top: 20px; border-top: 1px solid var(--line); }
+.faq-callout > svg { color: var(--cyan-dark); }
+.faq-callout p { margin: 6px 0; color: var(--gray); font-size: 10px; }
+.faq-callout a { color: var(--navy); font-size: 13px; font-weight: 700; }
+.faq-main-list { display: grid; gap: 54px; }
+.faq-main-category { scroll-margin-top: 140px; }
+.faq-main-category h2 { margin-bottom: 15px; font-size: 27px; font-weight: 600; letter-spacing: -.04em; }
+
+/* Contact and form */
+.contact-intro { padding: 67px 0 46px; }
+.contact-intro h1 { margin-bottom: 0; }
+.contact-main { padding-top: 45px; scroll-margin-top: 110px; }
+.contact-layout { display: grid; grid-template-columns: .72fr 1.28fr; gap: clamp(48px, 7vw, 108px); align-items: start; }
+.contact-details { max-width: 405px; }
+.contact-details h2 { margin-bottom: 31px; }
+.contact-detail-block { display: grid; grid-template-columns: 39px 1fr; gap: 14px; padding: 19px 0; border-top: 1px solid var(--line); }
+.contact-icon { display: grid; width: 36px; height: 36px; place-items: center; color: var(--cyan-dark); border: 1px solid var(--line); }
+.contact-detail-block h3 { margin: 0 0 5px; font-size: 13px; font-weight: 700; }
+.contact-detail-block p, .contact-detail-block a:not(.text-link) { display: block; margin: 0; color: var(--gray); font-size: 15px; line-height: 1.8; }
+.contact-detail-block a:not(.text-link):hover { color: var(--cyan-dark); }
+.contact-detail-block .text-link { margin-top: 9px; font-size: 13px; }
+.contact-note { padding-top: 17px; border-top: 1px solid var(--line); color: var(--gray); font-size: 13px; line-height: 1.7; }
+.contact-form-panel { padding: clamp(25px, 4vw, 46px); background: var(--paper); }
+.contact-form-heading { max-width: 580px; margin-bottom: 28px; }
+.contact-form-heading h2 { margin-bottom: 10px; font-size: clamp(28px, 3.2vw, 40px); font-weight: 600; letter-spacing: -.05em; line-height: 1.1; }
+.contact-form-heading > p:last-child { color: var(--gray); font-size: 14px; line-height: 1.7; }
+.form-required-note { margin: 0 0 15px; color: var(--gray); font-size: 12px; }
+.form-required-note span, .field-group label > span:not(.optional-label) { color: var(--cyan-dark); }
+.form-error-summary { padding: 9px 12px; margin-bottom: 13px; color: var(--navy); border-left: 2px solid var(--cyan-dark); background: #fff; font-size: 13px; }
+.form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 18px; }
+.field-group { min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.field-full { grid-column: 1 / -1; }
+.field-group label { color: var(--navy); font-size: 14px; font-weight: 700; }
+.optional-label { margin-left: 5px; color: var(--gray); font-size: 12px; font-weight: 400; }
+.form-control { width: 100%; min-height: 48px; padding: 10px 12px; border: 1px solid #cfdbdf; border-radius: 0; color: var(--navy); outline: none; background: #fff; font-size: 16px; transition: border-color var(--transition), box-shadow var(--transition); }
+.form-control:focus { border-color: var(--cyan-dark); box-shadow: 0 0 0 3px rgba(41,183,202,.14); }
+.form-control::placeholder { color: #97a4aa; }
+.form-control.has-error, .form-control[aria-invalid="true"] { border-color: var(--cyan-dark); }
+.field-error { color: var(--navy); font-size: 12px; }
+.field-hint { color: var(--gray); font-size: 12px; }
+textarea.form-control { min-height: 105px; resize: vertical; }
+.form-submit-row { display: flex; flex-wrap: wrap; align-items: center; gap: 17px; margin-top: 21px; }
+.form-submit-row > p { max-width: 320px; margin: 0; color: var(--gray); font-size: 12px; line-height: 1.6; }
+.appointment-form .button { cursor: pointer; }
+.form-confirmation { padding: 34px; border: 1px solid rgba(41,183,202,.35); background: #fff; }
+.confirmation-icon { display: grid; width: 47px; height: 47px; place-items: center; margin-bottom: 24px; color: #fff; background: var(--cyan); }
+.form-confirmation h2 { max-width: 460px; margin-bottom: 14px; font-size: 35px; font-weight: 600; letter-spacing: -.05em; line-height: 1.1; }
+.form-confirmation > p:not(.eyebrow) { max-width: 600px; color: var(--gray); font-size: 13px; line-height: 1.8; }
+.form-confirmation > p a { color: var(--navy); font-weight: 700; }
+.form-reset { margin-top: 10px; padding: 0; border: 0; background: none; cursor: pointer; }
+
+/* Privacy and not found */
+.privacy-intro { padding: 74px 0 43px; }
+.privacy-intro h1 { margin-bottom: 11px; font-size: clamp(44px, 5vw, 66px); font-weight: 600; letter-spacing: -.065em; line-height: 1.05; }
+.privacy-updated { margin: 0; color: var(--gray); font-size: 11px; }
+.privacy-content { background: var(--paper); }
+.privacy-layout { display: grid; grid-template-columns: .62fr 1.38fr; gap: clamp(50px, 9vw, 140px); align-items: start; }
+.privacy-note { position: sticky; top: 140px; padding: 22px; border: 1px solid var(--line); background: #fff; }
+.privacy-note svg { color: var(--cyan-dark); }
+.privacy-note p { margin: 12px 0 0; color: var(--gray); font-size: 11px; line-height: 1.75; }
+.privacy-article { max-width: 800px; }
+.privacy-article section { padding-bottom: 27px; margin-bottom: 26px; border-bottom: 1px solid var(--line); }
+.privacy-article h2 { margin-bottom: 10px; font-size: 21px; font-weight: 650; letter-spacing: -.03em; }
+.privacy-article p { color: var(--gray); font-size: 13px; line-height: 1.85; }
+.privacy-article a { color: var(--cyan-dark); text-decoration: underline; text-underline-offset: 3px; }
+.not-found-page { min-height: min(740px, calc(100svh - 300px)); display: grid; place-items: center; padding-block: 90px; }
+.not-found-inner { position: relative; max-width: 760px; text-align: center; }
+.not-found-mark { width: 57px; margin: 0 auto 28px; color: var(--cyan); }
+.not-found-inner h1 { max-width: 720px; margin-inline: auto; }
+.not-found-inner > p:not(.eyebrow) { max-width: 470px; margin: 0 auto 27px; color: var(--gray); font-size: 14px; }
+.not-found-inner .button-row { justify-content: center; }
+
+/* Gallery lightbox animation */
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+/* Tablet and compact desktop */
+@media (max-width: 1400px) {
+  .desktop-nav { display: none; }
+  .header-appointment { display: none; }
+  .nav-inner { min-height: 70px; }
+  .menu-trigger { display: grid; width: 43px; height: 43px; place-items: center; padding: 0; border: 1px solid var(--line); color: var(--navy); background: #fff; cursor: pointer; }
+  .mobile-navigation { position: fixed; z-index: 120; top: 0; right: 0; bottom: 0; display: flex; width: min(520px, 100vw); flex-direction: column; overflow-y: auto; padding: 25px clamp(24px, 5vw, 45px) 25px; color: var(--navy); background: #fff; box-shadow: -24px 0 70px rgba(8,47,74,.14); transform: translateX(105%); transition: transform 460ms var(--ease), visibility 0s linear 460ms; visibility: hidden; }
+.mobile-navigation.is-open { transform: translateX(0); transition-delay: 0s; visibility: visible; }
+  .mobile-navigation-top { display: flex; align-items: center; justify-content: space-between; min-height: 60px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+  .mobile-navigation-top .brand-logo { width: 175px; }
+  .mobile-close { display: grid; width: 42px; height: 42px; place-items: center; border: 1px solid var(--line); background: #fff; cursor: pointer; }
+  .mobile-navigation nav { display: grid; margin-block: 17px 21px; }
+  .mobile-navigation nav a { display: grid; grid-template-columns: 30px 1fr 24px; align-items: center; gap: 10px; min-height: 48px; border-bottom: 1px solid var(--line); font: 600 17px/1.3 "Manrope", sans-serif; letter-spacing: -.025em; }
+  .mobile-navigation nav a > svg { color: var(--cyan-dark); justify-self: end; transition: transform var(--transition); }
+  .mobile-navigation nav a:hover > svg { transform: translateX(4px); }
+  .mobile-nav-index { color: var(--cyan-dark); font: 600 9px/1 "DM Sans", sans-serif; letter-spacing: .05em; }
+  .mobile-book { margin-top: auto; }
+  .mobile-contact-row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; padding-top: 17px; margin-top: 20px; border-top: 1px solid var(--line); color: var(--gray); font-size: 13px; }
+  .mobile-contact-row a { display: inline-flex; align-items: center; gap: 7px; color: var(--navy); font-weight: 700; }
+  .mobile-contact-row svg { color: var(--cyan-dark); }
+}
+
+@media (max-width: 1060px) {
+  .container { width: min(var(--content-width), calc(100% - 64px)); }
+  .home-hero-grid { gap: 44px; grid-template-columns: .9fr 1.1fr; }
+  .hero-copy { padding-left: 0; }
+  .hero-copy h1 { font-size: clamp(46px, 5.8vw, 66px); }
+  .hero-tooth-detail { right: 0; width: 39px; }
+  .quick-item { padding-inline: 17px; gap: 10px; }
+  .treatment-grid { gap: 35px 19px; }
+  .treatment-grid-featured .treatment-card.is-featured .treatment-card-link { gap: 20px; }
+  .treatment-grid-featured .treatment-card.is-featured .treatment-card-content { padding-right: 9px; }
+  .footer-main { grid-template-columns: 1.2fr .8fr 1fr 1.15fr; gap: 32px; }
+  .about-image-caption { right: 32px; left: 32px; }
+  .gallery-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-rows: 220px; }
+  .gallery-card.gallery-feature { grid-column: span 2; grid-row: span 2; }
+  .contact-layout { gap: 45px; }
+}
+
+@media (max-width: 960px) {
+  .doctors-intro-inner { grid-template-columns: 1fr; gap: 22px; }
+  .doctors-intro { padding-block: 48px 32px; }
+  .doctors-grid { grid-template-columns: minmax(0, 1fr); max-width: 720px; }
+  .doctor-summary { min-height: 0; }
+}
+
+/* Tablet */
+@media (max-width: 820px) {
+  .container { width: min(var(--content-width), calc(100% - 48px)); }
+  .utility-open { display: none; }
+  .home-hero { padding-top: 34px; }
+  .home-hero-grid { min-height: auto; grid-template-columns: 1fr 1fr; gap: 32px; }
+  .hero-copy { padding-block: 15px 28px; }
+  .hero-location { max-width: 300px; margin-bottom: 24px; font-size: 9px; }
+  .hero-brand-name { font-size: 20px; }
+  .hero-copy h1 { font-size: clamp(40px, 6vw, 54px); }
+  .hero-description { font-size: 13px; }
+  .hero-photo-wrap { height: 470px; }
+  .hero-photo { border-top-right-radius: 72px; }
+  .button { min-height: 50px; padding-inline: 17px; font-size: 11px; }
+  .quick-item { min-height: 75px; padding-inline: 12px; }
+  .quick-item > svg:first-child { width: 20px; }
+  .quick-item > span { font-size: 10px; }
+  .welcome-grid, .cosmetic-grid, .kids-grid { gap: 43px; }
+  .welcome-photo img, .cosmetic-photo img, .kids-photo img { height: 420px; }
+  .welcome-copy h2, .cosmetic-copy h2, .kids-copy h2 { font-size: clamp(34px, 5vw, 45px); }
+  .treatments-heading-row { align-items: start; }
+  .treatments-heading-row .heading-link { margin-top: 12px; }
+  .treatment-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .treatment-grid-featured .treatment-card.is-featured { grid-column: span 2; }
+  .treatment-grid-featured .treatment-card.is-featured .treatment-image-wrap { min-height: 250px; }
+  .values-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .value-item { min-height: 205px; border-bottom: 1px solid var(--line); }
+  .value-item:nth-child(3) { border-left: 1px solid var(--line); }
+  .location-grid { gap: 40px; }
+  .location-section-compact .location-grid { grid-template-columns: .85fr 1.15fr; }
+  .final-cta-inner { min-height: 270px; gap: 25px; }
+  .final-cta-actions { flex-direction: column; align-items: stretch; }
+  .footer-main { grid-template-columns: repeat(2, 1fr); gap: 42px 55px; }
+  .editorial-hero-grid, .treatment-hero-grid, .invisalign-hero-grid, .kids-page-hero-grid { gap: 40px; }
+  .editorial-hero-copy, .treatment-hero-copy, .invisalign-hero-copy, .kids-page-copy { padding-left: 0; }
+  .editorial-hero-image img, .treatment-hero-image img, .invisalign-hero-image img, .kids-page-image img { height: 430px; border-top-right-radius: 70px; }
+  .directory-intro-grid { gap: 38px; }
+  .about-philosophy-grid, .treatment-overview-grid, .invisalign-overview-grid, .kids-overview-grid { gap: 45px; }
+  .about-care-grid, .invisalign-first-grid, .kids-practice-grid { gap: 43px; }
+  .commitment-row { grid-template-columns: 47px .8fr 1.2fr; gap: 16px; }
+  .process-step { padding-right: 14px; margin-right: 13px; }
+  .process-step p { font-size: 13px; }
+  .suitability-grid { grid-template-columns: 48px 1fr; }
+  .suitability-grid .text-link { grid-column: 2; }
+  .treatment-faq-grid, .invisalign-faq-grid, .kids-faq-grid { gap: 42px; }
+  .kids-aligner-inner { grid-template-columns: 45px 1fr; }
+  .kids-aligner-inner > img { display: none; }
+  .gallery-intro-grid { gap: 40px; }
+  .gallery-grid { grid-auto-rows: 205px; gap: 15px; }
+  .patient-intro-grid, .faq-page-intro-inner, .contact-intro-grid { gap: 40px; }
+  .patient-visit-grid, .faq-page-layout, .contact-layout, .privacy-layout { gap: 40px; }
+  .faq-sidebar { top: 125px; }
+  .map-frame { height: 410px; }
+}
+
+/* Mobile */
+@media (max-width: 620px) {
+  html { scroll-padding-top: 82px; }
+  body { font-size: 14px; }
+  .container { width: calc(100% - 40px); }
+  .section-space { padding-block: 73px; }
+  .section-heading h2 { font-size: clamp(33px, 9vw, 43px); }
+  .section-intro { font-size: 14px; }
+  .eyebrow { margin-bottom: 15px; font-size: 9px; }
+  .button-row { gap: 9px; }
+  .button { min-height: 49px; gap: 11px; padding-inline: 14px; font-size: 10px; }
+  .utility-inner { min-height: 30px; gap: 10px; }
+  .utility-bar { font-size: 11px; }
+  .utility-location { gap: 5px; }
+  .utility-location svg { width: 13px; }
+  .utility-contacts { gap: 8px; }
+  .utility-contacts a { gap: 5px; font-size: 11px; }
+  .utility-contacts a:nth-of-type(2), .utility-divider { display: none; }
+  .nav-inner { min-height: 65px; gap: 10px; }
+  .brand-link { min-width: 0; }
+  .brand-logo { width: 162px; }
+  .menu-trigger { width: 39px; height: 39px; }
+  .mobile-navigation { padding-inline: 23px; }
+  .mobile-navigation-top .brand-logo { width: 160px; }
+  .home-hero { padding: 31px 0 27px; }
+  .home-hero-grid { display: flex; flex-direction: column; align-items: stretch; gap: 28px; }
+  .hero-copy { padding: 6px 0 0; }
+  .hero-location { margin-bottom: 19px; }
+  .hero-brand-name { margin-bottom: 12px; font-size: 19px; }
+  .hero-copy h1 { max-width: 520px; margin-bottom: 16px; font-size: clamp(42px, 11vw, 54px); letter-spacing: -.07em; line-height: 1.02; }
+  .hero-description { max-width: 500px; margin-bottom: 21px; font-size: 13px; line-height: 1.72; }
+  .hero-tooth-detail { top: 0; right: 2px; width: 31px; opacity: .26; }
+  .hero-support { margin-top: 17px; font-size: 10px; }
+  .hero-photo-wrap { height: min(105vw, 420px); }
+  .hero-photo { border-top-right-radius: 67px; }
+  .hero-photo-caption { font-size: 8px; letter-spacing: .07em; }
+  .quick-access-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .quick-item { min-height: 64px; gap: 9px; padding: 0 8px; border-bottom: 1px solid var(--line); }
+  .quick-item:first-child { border-left: 1px solid var(--line); }
+  .quick-item:nth-child(3) { border-left: 1px solid var(--line); border-bottom: 0; }
+  .quick-item:nth-child(4) { border-bottom: 0; }
+  .quick-item > span { font-size: 9px; line-height: 1.35; }
+  .quick-arrow { display: none; }
+  .welcome-grid, .cosmetic-grid, .kids-grid, .editorial-hero-grid, .about-philosophy-grid, .about-care-grid, .directory-intro-grid, .treatment-hero-grid, .treatment-overview-grid, .invisalign-hero-grid, .invisalign-overview-grid, .invisalign-first-grid, .kids-page-hero-grid, .kids-overview-grid, .kids-practice-grid, .gallery-intro-grid, .patient-intro-grid, .patient-visit-grid, .faq-page-intro-inner, .contact-intro-grid, .contact-layout, .privacy-layout { grid-template-columns: 1fr; gap: 34px; }
+  .welcome-grid { gap: 31px; }
+  .welcome-photo img, .cosmetic-photo img, .kids-photo img, .about-care-image img { height: min(112vw, 420px); }
+  .welcome-photo img { border-top-right-radius: 65px; }
+  .welcome-copy { padding: 5px 0 0; }
+  .welcome-copy h2, .cosmetic-copy h2, .kids-copy h2 { font-size: clamp(36px, 9vw, 45px); }
+  .welcome-copy > p:not(.eyebrow), .cosmetic-copy > p:not(.eyebrow), .kids-copy > p:not(.eyebrow) { font-size: 13px; }
+  .treatments-heading-row { display: block; margin-bottom: 30px; }
+  .treatments-heading-row .heading-link { margin-top: 0; }
+  .treatment-grid { grid-template-columns: 1fr; gap: 27px; }
+  .treatment-grid-featured .treatment-card.is-featured { grid-column: auto; }
+  .treatment-card-link, .treatment-grid-featured .treatment-card.is-featured .treatment-card-link { display: block; height: auto; }
+  .treatment-grid-featured .treatment-card.is-featured .treatment-image-wrap { width: 100%; height: auto; min-height: 0; aspect-ratio: 1.45 / 1; }
+  .treatment-grid-featured .treatment-card.is-featured .treatment-card-content { padding: 15px 2px 0; }
+  .treatment-grid-featured .treatment-card.is-featured .treatment-card-title { font-size: 18px; }
+  .treatment-card-title { font-size: 17px; }
+  .treatment-card-description { font-size: 11px; }
+  .treatment-disclaimer { margin-top: 27px; font-size: 9px; text-align: left; }
+  .cosmetic-grid, .kids-grid { gap: 32px; }
+  .cosmetic-photo img { border-bottom-right-radius: 62px; }
+  .kids-photo img { border-bottom-left-radius: 62px; }
+  .kids-links { gap: 14px 21px; }
+  .values-heading { margin-bottom: 33px; }
+  .values-grid { grid-template-columns: 1fr; }
+  .value-item, .value-item:first-child, .value-item:nth-child(3) { min-height: auto; padding: 20px 0; border-right: 0; border-bottom: 1px solid var(--line); border-left: 0; }
+  .value-topline { margin-bottom: 19px; }
+  .value-item h3 { max-width: none; font-size: 18px; }
+  .value-item p { max-width: 360px; margin-bottom: 0; }
+  .location-grid, .location-section-compact .location-grid { grid-template-columns: 1fr; gap: 30px; }
+  .location-copy h2 { font-size: 38px; }
+  .map-frame, .location-section-compact .map-frame { height: 320px; }
+  .final-cta-inner { min-height: 0; display: block; padding-block: 56px; }
+  .final-cta h2 { font-size: clamp(39px, 10vw, 49px); }
+  .final-cta-actions { flex-direction: row; margin-top: 25px; }
+  .cta-tooth-mark { right: -14px; top: 6px; width: 72px; }
+  .footer-main { grid-template-columns: 1fr 1fr; gap: 34px 21px; padding-bottom: 39px; }
+  .footer-brand-column { grid-column: 1 / -1; }
+  .footer-brand-column > p { max-width: 330px; }
+  .footer-title { margin-bottom: 14px; }
+  .footer-links { gap: 8px; }
+  .footer-links a { font-size: 13px; }
+  .footer-contact-column { grid-column: 1 / -1; }
+  .footer-bottom { flex-direction: column; gap: 7px; font-size: 12px; }
+  .back-to-top { right: 15px; bottom: 15px; width: 38px; height: 38px; }
+  .breadcrumbs { padding-top: 13px; }
+  .breadcrumbs ol { gap: 6px; font-size: 12px; }
+  .breadcrumbs li + li::before { padding-right: 6px; }
+  .editorial-page-hero, .treatment-hero-page, .invisalign-hero, .kids-page-hero { padding-block: 37px 29px; }
+  .editorial-hero-copy h1, .directory-intro h1, .treatment-hero-copy h1, .invisalign-hero-copy h1, .kids-page-copy h1, .gallery-intro h1, .patient-intro h1, .faq-page-intro h1, .contact-intro h1, .privacy-intro h1, .not-found-inner h1 { font-size: clamp(40px, 10vw, 51px); }
+  .editorial-hero-image img, .treatment-hero-image img, .invisalign-hero-image img, .kids-page-image img { height: min(105vw, 400px); border-top-right-radius: 65px; }
+  .about-philosophy-grid { gap: 25px; }
+  .about-philosophy-heading h2, .about-care-copy h2 { font-size: 39px; }
+  .about-image-band { height: 290px; }
+  .about-image-caption { right: 20px; bottom: 16px; left: 20px; font-size: 8px; }
+  .about-commitments .section-heading { margin-bottom: 30px; }
+  .commitment-row { grid-template-columns: 32px 1fr; gap: 9px 13px; padding: 17px 0; }
+  .commitment-row h3 { font-size: 17px; }
+  .commitment-row p { grid-column: 2; font-size: 11px; }
+  .about-care-grid { gap: 31px; }
+  .directory-intro { padding: 44px 0 31px; }
+  .directory-intro-grid { gap: 22px; }
+  .directory-intro-aside > p { font-size: 13px; }
+  .directory-treatments { padding-top: 11px; }
+  .directory-overline { margin-bottom: 23px; font-size: 8px; }
+  .treatment-hero-grid { gap: 29px; }
+  .treatment-hero-copy h1 { margin-bottom: 15px; }
+  .treatment-lead { font-size: 13px; }
+  .treatment-hero-note { font-size: 9px; }
+  .treatment-overview-grid, .invisalign-overview-grid, .kids-overview-grid { gap: 23px; }
+  .overview-title h2, .detail-column h2, .suitability-grid h2, .treatment-faq-heading h2, .invisalign-overview-title h2, .kids-overview-grid h2, .kids-practice-copy h2, .kids-guidance-title h2, .patient-visit-heading h2, .contact-details h2 { font-size: 37px; }
+  .overview-copy p, .detail-column > p:not(.eyebrow) { font-size: 13px; }
+  .treatment-details-section { padding-block: 55px; }
+  .treatment-detail-columns { grid-template-columns: 1fr; gap: 42px; }
+  .detail-column h2 { margin-bottom: 20px; font-size: 32px; }
+  .check-list, .benefit-list { gap: 13px; }
+  .check-list li, .benefit-list li { font-size: 12px; }
+  .treatment-process-section .section-heading { margin-bottom: 32px; }
+  .process-list { grid-template-columns: repeat(2, 1fr); }
+  .process-step { min-height: 155px; padding: 17px 12px 0 0; margin: 0 14px 0 0; border-bottom: 1px solid var(--line); }
+  .process-step:nth-child(2) { margin-right: 0; border-right: 0; }
+  .process-step:nth-child(3) { padding-top: 17px; }
+  .process-step:last-child { margin-right: 0; border-right: 0; }
+  .process-step p { margin-top: 22px; font-size: 12px; }
+  .suitability-grid { grid-template-columns: 41px 1fr; gap: 12px; }
+  .suitability-mark { width: 39px; height: 39px; }
+  .suitability-grid h2 { font-size: 22px; }
+  .suitability-grid > div:nth-child(2) > p:last-child { font-size: 11px; }
+  .suitability-grid .text-link { grid-column: 2; font-size: 11px; }
+  .treatment-faq-grid, .invisalign-faq-grid, .kids-faq-grid { grid-template-columns: 1fr; gap: 26px; }
+  .treatment-faq-heading h2, .invisalign-faq-grid h2, .kids-faq-grid h2 { font-size: 38px; }
+  .related-heading { align-items: start; flex-direction: column; gap: 14px; }
+  .related-treatments .treatment-grid { grid-template-columns: 1fr; }
+  .comparison-section .section-heading { margin-bottom: 28px; }
+  .comparison-table th, .comparison-table td { padding: 15px 13px; }
+  .comparison-table tbody th { width: 30%; }
+  .kids-practice-grid, .kids-guidance-grid { grid-template-columns: 1fr; gap: 30px; }
+  .kids-practice-image { order: -1; }
+  .kids-practice-image img { height: min(104vw, 380px); }
+  .kids-aligner-feature { padding-block: 39px; }
+  .kids-aligner-inner { grid-template-columns: 1fr; gap: 14px; }
+  .kids-aligner-inner h2 { font-size: 25px; }
+  .kids-aligner-inner > div:nth-child(2) > p:not(.eyebrow) { font-size: 11px; }
+  .gallery-intro { padding: 44px 0 25px; }
+  .gallery-intro-grid { gap: 20px; }
+  .gallery-intro-grid > p { font-size: 12px; }
+  .gallery-filter-row { gap: 4px; padding-block: 6px 18px; margin-bottom: 17px; }
+  .gallery-filter { min-height: 40px; gap: 8px; padding-inline: 11px; font-size: 12px; }
+  .gallery-filter span { min-width: 16px; height: 16px; font-size: 8px; }
+  .gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 205px; gap: 14px 11px; }
+  .gallery-card.gallery-feature { grid-column: span 2; grid-row: span 1; }
+  .gallery-card.gallery-feature .gallery-image-button { aspect-ratio: 16 / 9; }
+  .gallery-card-caption { padding-top: 6px; }
+  .gallery-card-caption h2 { font-size: 13px; }
+  .gallery-card-caption > span { font-size: 9px; }
+  .gallery-open-icon { right: 7px; bottom: 7px; width: 29px; height: 29px; opacity: 1; transform: none; }
+  .gallery-note { font-size: 9px; text-align: left; }
+  .lightbox-backdrop { padding: 15px; }
+  .lightbox-dialog { width: 100%; }
+  .lightbox-top { padding-bottom: 10px; }
+  .lightbox-content { grid-template-columns: 39px minmax(0, 1fr) 39px; gap: 6px; }
+  .lightbox-arrow, .lightbox-close { width: 38px; height: 38px; }
+  .lightbox-photo { max-height: 67vh; aspect-ratio: 4 / 3; }
+  .lightbox-caption { display: grid; grid-template-columns: 1fr; gap: 3px; }
+  .lightbox-caption p { font-size: 13px; }
+  .lightbox-caption small { margin: 0; font-size: 9px; }
+  .patient-intro, .faq-page-intro, .contact-intro { padding: 46px 0 30px; }
+  .patient-intro-grid > p, .faq-page-intro-inner > p, .contact-intro-grid > p { font-size: 12px; }
+  .patient-visit-grid { gap: 27px; }
+  .patient-children-band { padding-block: 38px; }
+  .patient-children-grid { grid-template-columns: 1fr; gap: 22px; }
+  .patient-children-grid > img { height: 240px; }
+  .patient-link-grid { grid-template-columns: 1fr; }
+  .patient-link-item, .patient-link-item + .patient-link-item { min-height: 150px; padding: 17px 40px 14px 0; border-right: 0; border-bottom: 1px solid var(--line); }
+  .patient-link-item:last-child { border-bottom: 0; }
+  .patient-link-item h3 { margin-top: 11px; }
+  .patient-link-item > svg { right: 9px; bottom: 25px; }
+  .faq-page-layout { grid-template-columns: 1fr; gap: 35px; }
+  .faq-sidebar { position: static; }
+  .faq-sidebar nav { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 0 15px; }
+  .faq-sidebar nav a { font-size: 9px; }
+  .faq-sidebar nav a svg { display: none; }
+  .faq-callout { display: flex; align-items: center; gap: 11px; }
+  .faq-callout p { margin: 0; }
+  .faq-callout a { margin-left: auto; }
+  .faq-main-list { gap: 38px; }
+  .faq-main-category h2 { font-size: 23px; }
+  .faq-item h3 button { gap: 14px; padding-block: 14px; font-size: 12px; }
+  .faq-answer p { padding-right: 0; font-size: 11px; }
+  .contact-main { padding-top: 28px; }
+  .contact-layout { gap: 35px; }
+  .contact-form-panel { padding: 22px 17px; }
+  .contact-details h2 { margin-bottom: 22px; }
+  .form-grid { grid-template-columns: 1fr; gap: 13px; }
+  .field-full { grid-column: auto; }
+  .form-submit-row { align-items: flex-start; flex-direction: column; }
+  .form-submit-row > p { max-width: 340px; }
+  .form-confirmation { padding: 23px 19px; }
+  .form-confirmation h2 { font-size: 30px; }
+  .location-section-compact { padding-block: 55px; }
+  .privacy-intro { padding: 47px 0 29px; }
+  .privacy-layout { gap: 31px; }
+  .privacy-note { position: static; padding: 17px; }
+  .privacy-article h2 { font-size: 19px; }
+  .privacy-article p { font-size: 12px; }
+  .not-found-page { min-height: 530px; padding-block: 75px; }
+  .not-found-inner > p:not(.eyebrow) { font-size: 12px; }
+  .not-found-inner .button-row { gap: 8px; }
+}
+
+@media (max-width: 390px) {
+  .container { width: calc(100% - 34px); }
+  .brand-logo { width: 150px; }
+  .header-appointment { max-width: 136px; min-height: 38px; padding-inline: 8px; white-space: normal; font-size: 8px; line-height: 1.2; }
+  .header-appointment svg { display: none; }
+  .menu-trigger { width: 36px; height: 36px; }
+  .nav-inner { gap: 8px; }
+  .hero-copy h1 { font-size: 42px; }
+  .hero-photo-caption { font-size: 7px; }
+  .quick-item { gap: 6px; padding-inline: 6px; }
+  .quick-item > svg:first-child { width: 18px; }
+  .quick-item > span { font-size: 8px; }
+  .button { padding-inline: 11px; font-size: 9px; }
+  .gallery-grid { grid-auto-rows: 190px; gap: 12px 9px; }
+  .gallery-filter { gap: 7px; padding-inline: 10px; font-size: 11px; }
+  .gallery-card-caption h2 { font-size: 12px; }
+}
+
+@media (max-width: 340px) {
+  .brand-logo { width: 150px; }
+}
+
+@media (min-width: 621px) and (max-width: 960px) {
+  .welcome-grid, .cosmetic-grid, .kids-grid, .editorial-hero-grid, .about-philosophy-grid, .about-care-grid, .directory-intro-grid, .treatment-hero-grid, .treatment-overview-grid, .invisalign-hero-grid, .invisalign-overview-grid, .invisalign-first-grid, .kids-page-hero-grid, .kids-overview-grid, .kids-practice-grid, .gallery-intro-grid, .patient-intro-grid, .patient-visit-grid, .faq-page-intro-inner, .contact-intro-grid, .contact-layout, .privacy-layout { column-gap: clamp(28px, 5vw, 54px); }
+  .footer-main { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 36px 40px; }
+  .values-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .value-item:nth-child(3) { border-left: 1px solid var(--line); }
+}
+
+@media (max-width: 620px) {
+  body { font-size: 15px; }
+  .container { width: calc(100% - 36px); }
+  .utility-inner { flex-wrap: wrap; justify-content: center; gap: 4px 14px; padding-block: 5px; }
+  .utility-contacts { gap: 7px; }
+  .footer-main { gap: 30px 20px; }
+  .footer-brand-column > p { font-size: 14px; }
+  .footer-links a, .footer-phones a { font-size: 13px; }
+  .footer-contact-column .footer-address, .footer-hours { font-size: 13px; }
+  .footer-bottom { font-size: 12px; }
+  .breadcrumbs ol { font-size: 12px; }
+  .hero-description, .welcome-copy > p:not(.eyebrow), .cosmetic-copy > p:not(.eyebrow), .kids-copy > p:not(.eyebrow), .gallery-intro-grid > p, .patient-intro-grid > p, .faq-page-intro-inner > p, .contact-intro-grid > p, .section-intro { font-size: 15px; }
+  .directory-intro-aside > p, .treatment-lead, .treatment-hero-note { font-size: 14px; }
+  .overview-copy p, .detail-column > p:not(.eyebrow), .suitability-grid > div:nth-child(2) > p:not(.eyebrow), .treatment-faq-heading > p:not(.eyebrow) { font-size: 14px; }
+  .contact-detail-block p, .contact-detail-block a:not(.text-link) { font-size: 15px; }
+  .contact-detail-block h3 { font-size: 15px; }
+  .contact-note, .contact-form-heading > p:last-child { font-size: 13px; }
+  .form-required-note, .form-error-summary, .field-error, .field-hint, .form-submit-row > p { font-size: 12px; }
+  .field-group label { font-size: 14px; }
+  .form-control { min-height: 48px; font-size: 16px; }
+  .gallery-filter-row { flex-wrap: nowrap; overflow-x: auto; overscroll-behavior-inline: contain; scrollbar-width: thin; }
+  .gallery-filter { flex: 0 0 auto; }
+  .gallery-note { font-size: 12px; }
+  .doctors-intro { padding-block: 44px 27px; }
+  .doctors-intro-inner { gap: 18px; }
+  .doctors-intro h1 { font-size: clamp(40px, 10vw, 51px); }
+  .doctors-intro-inner > p { font-size: 15px; }
+  .doctors-grid { gap: 23px; }
+  .doctor-card-content { padding: 23px 19px; }
+  .doctor-badges { gap: 7px; margin-bottom: 17px; }
+  .doctor-badges span { font-size: 10px; }
+  .doctor-designation { font-size: 15px; }
+  .doctor-summary { font-size: 14px; }
+  .doctor-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .doctor-metrics > div { padding-block: 13px 5px; border-bottom: 1px solid var(--line); }
+  .doctor-metrics dt { font-size: 17px; }
+  .doctor-metrics dd { font-size: 12px; }
+}
+
+@media (max-width: 390px) {
+  .footer-main { column-gap: 16px; }
+  .footer-phones { flex-direction: column; gap: 8px; }
+  .gallery-filter-row { margin-inline: -4px; padding-inline: 4px; }
+  .gallery-card-caption h2 { font-size: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  .motion-ready .reveal:not(.is-visible), .motion-ready .reveal-image:not(.is-visible) { opacity: 1; transform: none; }
+}
