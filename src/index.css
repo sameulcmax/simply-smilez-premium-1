@@ -25,7 +25,7 @@
 * { box-sizing: border-box; }
 :where([class*="-grid"]) > * { min-width: 0; }
 html { overflow-x: clip; scroll-behavior: smooth; scroll-padding-top: 120px; }
-body { margin: 0; min-width: 0; background: #fff; color: var(--navy); font-size: 16px; line-height: 1.65; }
+body { margin: 0; min-width: 0; overflow-x: clip; background: #fff; color: var(--navy); font-size: 16px; line-height: 1.65; }
 body.menu-open { overflow: hidden; }
 button, input, select, textarea { font: inherit; }
 button, a { -webkit-tap-highlight-color: transparent; }
@@ -601,7 +601,7 @@ textarea.form-control { min-height: 105px; resize: vertical; }
   .header-appointment { display: none; }
   .nav-inner { min-height: 70px; }
   .menu-trigger { display: grid; width: 43px; height: 43px; place-items: center; padding: 0; border: 1px solid var(--line); color: var(--navy); background: #fff; cursor: pointer; }
-  .mobile-navigation { position: fixed; z-index: 120; top: 0; right: 0; bottom: 0; display: flex; width: min(520px, 100vw); flex-direction: column; overflow-y: auto; padding: 25px clamp(24px, 5vw, 45px) 25px; color: var(--navy); background: #fff; box-shadow: -24px 0 70px rgba(8,47,74,.14); transform: translateX(105%); transition: transform 460ms var(--ease), visibility 0s linear 460ms; visibility: hidden; }
+  .mobile-navigation { position: fixed; z-index: 120; top: 0; right: 0; bottom: 0; display: flex; width: min(520px, 100vw); flex-direction: column; overflow-y: auto; padding: 25px clamp(24px, 5vw, 45px) 25px; color: var(--navy); background: #fff; box-shadow: -24px 0 70px rgba(8,47,74,.14); transform: translateX(100%); transition: transform 460ms var(--ease), visibility 0s linear 460ms; visibility: hidden; }
 .mobile-navigation.is-open { transform: translateX(0); transition-delay: 0s; visibility: visible; }
   .mobile-navigation-top { display: flex; align-items: center; justify-content: space-between; min-height: 60px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
   .mobile-navigation-top .brand-logo { width: 175px; }
